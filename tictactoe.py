@@ -1,7 +1,12 @@
 import os
 
 
+def initializeBoard():
+    return [[" " for _ in range(3)] for _ in range(3)]
+
+
 def display_board(board):
+    os.system("cls||clear")
     i = 0
     for row in board:
         i += 1
@@ -9,14 +14,6 @@ def display_board(board):
         if i != 3:
             print("-" * 10)
     print()
-
-
-def initializeBoard():
-    return [[" " for _ in range(3)] for _ in range(3)]
-
-
-# board = initializeBoard()
-# display_board(board)
 
 
 def isValidMove(moves, board):
@@ -44,19 +41,47 @@ def playerMove(board, player):
             print("Your input was out of bound, please enter again")
 
 
-# board = [[" ", " ", " "], [" ", "X", " "], [" ", " ", " "]]
+def checkWinCondition(board, player):
+    win_conditions = [
+        [board[0][0], board[0][1], board[0][2]],
+        [board[1][0], board[1][1], board[1][2]],
+        [board[2][0], board[2][1], board[2][2]],
+        [board[0][0], board[1][0], board[2][0]],
+        [board[0][1], board[1][1], board[2][1]],
+        [board[0][2], board[1][2], board[2][2]],
+        [board[0][0], board[1][1], board[2][2]],
+        [board[2][0], board[1][1], board[0][2]],
+    ]
+    return [player, player, player] in win_conditions
+
+
+def checkDraw(board):
+    for row in board:
+        if " " in row:
+            return False
+    return True
+
+
 def playGame():
     board = initializeBoard()
     currentPlayer = "X"
-    i = 0
-    while i < 5:
-        os.system('cls||clear')
+    while True:
         display_board(board)
 
         playerMove(board, currentPlayer)
 
+        if checkWinCondition(board, currentPlayer):
+            display_board(board)
+            print(f"Congratulation!!\nPlayer {
+                  currentPlayer} have won the game!!")
+            break
+
+        elif checkDraw(board):
+            display_board(board)
+            print("Its a draw!!")
+            break
+
         currentPlayer = "0" if currentPlayer == "X" else "X"
-        i += 1
 
 
 playGame()
