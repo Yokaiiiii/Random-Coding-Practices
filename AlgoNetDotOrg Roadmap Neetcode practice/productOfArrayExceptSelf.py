@@ -17,15 +17,54 @@
 """
 
 
-arr = [-1, 1, 0, -3, 3]
+arr = [1, 2, 3, 4]
+
+
+def brute_force_solution(nums):
+    # brute force approach
+    solution = [1] * len(nums)
+
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            solution[i] *= nums[j] if i != j else 1
+
+    return solution
+
+
+def left_product(nums):
+    left = [1] * len(nums)
+    for i in range(1, len(nums)):
+        left[i] = left[i - 1] * nums[i - 1]
+
+    return left
+
+
+def right_product(nums):
+    right = [1] * len(nums)
+    for i in reversed(range(0, len(nums) - 1)):
+        right[i] = right[i + 1] * nums[i + 1]
+
+    return right
 
 
 def solution(nums):
-    dic = {}
-    for j in range(len(nums)):
-        dic[nums[j]] = [nums[i] for i in range(len(nums)) if i != j]
+    # left product
+    left = [1] * len(nums)
+    for i in range(1, len(nums)):
+        left[i] = left[i - 1] * nums[i - 1]
 
-    return dic
+    # right product
+    right = [1] * len(nums)
+    for i in reversed(range(0, len(nums) - 1)):
+        right[i] = right[i + 1] * nums[i + 1]
+
+    # solution
+    for i in range(len(nums)):
+        nums[i] = left[i] * right[i]
+
+    return nums
 
 
+print(left_product(arr))
+print(right_product(arr))
 print(solution(arr))

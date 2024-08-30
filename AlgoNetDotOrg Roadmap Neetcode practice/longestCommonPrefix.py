@@ -31,13 +31,13 @@ def solution(strs):
     word = strs[0]
     for j in range(min_length):
         letter = word[j]
-        print(f"letter = {letter}")
+        # print(f"letter = {letter}")
         for s in strs:
-            print(f"S[j] = {s[j]}")
+            # print(f"S[j] = {s[j]}")
             if letter != s[j]:
                 return word[:i]
         else:
-            print("True")
+            # print("True")
             i += 1
     return word[:i]
 
