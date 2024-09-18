@@ -20,28 +20,23 @@
 
 
 def solution(temperatures):
-    n = len(temperatures)
-    stack = []
-    answer = [0] * n
+    n = len(temperatures)  # Get the number of temperatures
+    stack = []  # Initialize an empty stack to keep track of indices
+    answer = [0] * n  # Initialize the answer list with zeros
 
     for i in range(n):
-        print(stack)
-        print(answer)
-        if stack == []:
-            stack.append((temperatures[i], i))
-        elif stack[-1][0] > temperatures[i]:
-            stack.append((temperatures[i], i))
-        else:
-            while stack != []:
-                if stack[-1][0] < temperatures[i]:
-                    answer[stack[-1][1]] = i - stack[-1][1]
-                    stack.pop()
-                else:
-                    stack.append((temperatures[i], i))
-                    break
-            else:
-                stack.append((temperatures[i], i))
-    return answer
+        # While stack is not empty and the current temperature is higher than the temperature at the index stored at the top of the stack
+        while stack and temperatures[stack[-1]] < temperatures[i]:
+            idx = stack.pop()  # Pop the index from the stack
+            answer[idx] = i - idx  # Calculate the number of days until a warmer temperature
+        stack.append(i)  # Push the current index onto the stack
+    
+    return answer  # Return the list of days until a warmer temperature
+
+# Example usage
+temperatures = [73, 74, 75, 71, 69, 72, 76, 73]
+print(solution(temperatures))  # Outputs: [1, 1, 4, 2, 1, 1, 0, 0]
+
 
 
 print(solution([73, 74, 75, 71, 69, 72, 76, 73]))
